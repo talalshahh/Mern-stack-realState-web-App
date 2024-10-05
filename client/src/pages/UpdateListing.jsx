@@ -40,7 +40,9 @@ const UpdateListing = () => {
 		const listingId = params.listingId;
 		console.log(listingId);
 		const fetchListing = async () => {
-			const res = await fetch(`/api/listing/get/${listingId}`);
+			const res = await fetch(
+				`${import.meta.env.VITE_API_URL}/api/listing/get/${listingId}`
+			);
 			const data = await res.json();
 			if (data.success === false) {
 				console.log(data.message);
@@ -153,16 +155,19 @@ const UpdateListing = () => {
 		setLoading(true);
 		setError(false);
 
-		const res = await fetch(`/api/listing/update/${params.listingId}`, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				...formData,
-				userRef: currentUser._id,
-			}),
-		});
+		const res = await fetch(
+			`${import.meta.env.VITE_API_URL}/api/listing/update/${params.listingId}`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					...formData,
+					userRef: currentUser._id,
+				}),
+			}
+		);
 		const data = await res.json();
 		console.log(data);
 		setLoading(false);
